@@ -1,6 +1,7 @@
 Telephone directory
 =============
 A simple exercise to learn a bit more about Heroku, CI and test driven development with Jasmine.
+The online version of this application can be found [here](http://pacific-refuge-9141.herokuapp.com/)
 
 #Setup
 This application uses Node and MongoDB, so both need to be installed on your system.
@@ -14,17 +15,22 @@ npm install
 Next step is to create a Mongo database and get the URL for it.
 This because internally the app makes use of the environment variable called `MONGO_URL`.
 
-You can set the environment variable by exporting it first
+You can set the environment variable with
 
 ```
 export MONGO_URL=mongodb://<user>:<password>@localhost:27017/telephonedirectory
 ```
 
-and then running
+and then run
 
 ```
 node app.js
 ```
+
+to start the app.
+
+#Tests
+
 
 
 
