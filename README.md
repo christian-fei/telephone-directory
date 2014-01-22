@@ -7,14 +7,14 @@ The online version of this application can be found [here](http://telephone-dire
 This application is a very basic phone book with which you can save informations about a person's name, surname and phone number[s].
 I left out the whole auth system because it would go beyound the scope of this exercise.
 
-##The stack
+###The stack
 I've chosen to build this application with [Express](http://expressjs.com/)  and MongoDB because in my opinion it neatly meets the projects requirements:
 
 - the ability to talk client <-> server and server <-> database in JavaScript
 - simple and native JSON support on the client, server and database
 - no relational data (we can use an Array to store multiple numbers for a single person)
 
-##Web app
+###Web app
 The web app has three pages:
 
 - __Home page__
@@ -25,7 +25,7 @@ The web app has three pages:
     - Contains a form for modifying an existing entry.
 
 #Deployment
-##heroku
+###heroku
 
 I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the steps needed to run your app in the cloud:
 
@@ -36,7 +36,7 @@ git push heroku master
 heroku open
 ```
 
-##locally
+###locally
 This application uses Node and MongoDB, so both need to be installed on your system.
 
 Install the npm dependencies by running
@@ -73,7 +73,7 @@ to start the app.
 
 
 #License
-##MIT licensed
+###MIT licensed
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
