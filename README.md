@@ -3,7 +3,15 @@ Telephone directory
 A simple exercise to learn a bit more about Heroku, CI and test driven development with Jasmine.
 The online version of this application can be found [here](http://telephone-directory.herokuapp.com/)
 
-#Running locally
+#About
+This application is a very basic phone book with which you can save Numbers of people by storing information about their name, surname and phone number.
+I left out the whole auth system because it would go beyound the scope of this exercise.
+
+##The app
+
+
+#Deployment
+##locally
 This application uses Node and MongoDB, so both need to be installed on your system.
 
 Install the npm dependencies by running
@@ -25,11 +33,12 @@ and then run
 
 ```
 node app.js
+#or foreman start if you have heroku installed
 ```
 
 to start the app.
 
-#Deployment
+##heroku
 
 I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the steps needed to run your app in the cloud:
 
