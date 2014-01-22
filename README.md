@@ -8,7 +8,7 @@ This application is a very basic phone book with which you can save informations
 I left out the whole auth system because it would go beyound the scope of this exercise.
 
 ##The app
-I chose to build this application with [Express](http://expressjs.com/)  and MongoDB because in my opinion it perfectly fitted into the projects requirements:
+I've chosen to build this application with [Express](http://expressjs.com/)  and MongoDB because in my opinion it neatly meets the projects requirements:
 
 - the ability to talk client <-> server and server <-> database in JavaScript
 - simple and native JSON support on the client, server and database
@@ -16,6 +16,17 @@ I chose to build this application with [Express](http://expressjs.com/)  and Mon
 
 
 #Deployment
+##heroku
+
+I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the steps needed to run your app in the cloud:
+
+```
+heroku apps:create [application name] --stack cedar
+heroku config:set MONGO_URL=[your Mongo URL]
+git push heroku master
+heroku open
+```
+
 ##locally
 This application uses Node and MongoDB, so both need to be installed on your system.
 
@@ -43,16 +54,8 @@ node app.js
 
 to start the app.
 
-##heroku
 
-I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the steps needed to run your app in the cloud:
 
-```
-heroku apps:create [application name] --stack cedar
-heroku config:set MONGO_URL=[your Mongo URL]
-git push heroku master
-heroku open
-```
 
 #Tests
 
