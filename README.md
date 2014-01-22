@@ -1,9 +1,9 @@
 Telephone directory
 =============
 A simple exercise to learn a bit more about Heroku, CI and test driven development with Jasmine.
-The online version of this application can be found [here](http://pacific-refuge-9141.herokuapp.com/)
+The online version of this application can be found [here](http://telephone-directory.herokuapp.com/)
 
-#Setup
+#Running locally
 This application uses Node and MongoDB, so both need to be installed on your system.
 
 Install the npm dependencies by running
@@ -29,11 +29,18 @@ node app.js
 
 to start the app.
 
+#Deployment
+
+I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the steps needed to run your app in the cloud:
+
+```
+heroku apps:create [application name] --stack cedar
+heroku config:set MONGO_URL=[your Mongo URL]
+git push heroku master
+heroku open
+```
+
 #Tests
-
-
-
-
 
 
 
