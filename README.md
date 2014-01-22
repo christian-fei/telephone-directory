@@ -4,7 +4,7 @@ A simple exercise to learn a bit more about Heroku, CI and test driven developme
 The online version of this application can be found [here](http://telephone-directory.herokuapp.com/)
 
 #About
-This application is a very basic phone book with which you can save informations about their name, surname and phone number[s].
+This application is a very basic phone book with which you can save informations about a person's name, surname and phone number[s].
 I left out the whole auth system because it would go beyound the scope of this exercise.
 
 ##The app
