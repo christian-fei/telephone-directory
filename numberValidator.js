@@ -5,7 +5,7 @@
 		a space, a nonempty group of digits,
 		a space, a group of digits with at least 6 digits.
 */
-var validNumber = /\+[0-9]{2,4} [0-9]{2,4} [0-9]{6,}/;
+var validNumber = /\+[0-9]{2,4} [0-9]{2,4} [0-9]{6,15}/;
 function isValid(number){
 	if( number ){
 		number = number + ""; //to String conversion

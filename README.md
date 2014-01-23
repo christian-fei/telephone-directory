@@ -70,7 +70,17 @@ to start the app.
 
 
 #Tests
+The testing suite is `jasmine-node`.
 
+To run the tests:
+
+```
+npm test
+#or
+jasmine-node .
+#or to watch tests
+jasmine-node . --watch --autotest --growl
+```
 
 
 

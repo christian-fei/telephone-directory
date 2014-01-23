@@ -2,9 +2,13 @@ var numberValidator = require('../numberValidator');
 
 describe('numberValidator', function(){
 	it('is a valid number (+39 0471 707090)', function(){
-		expect(	numberValidator.isValid('+39 0471 707090') )
-			.toBeTruthy();
-	});
+    expect( numberValidator.isValid('+39 0471 707090') )
+      .toBeTruthy();
+  });
+  it('is a valid number (+39 345 4455667)', function(){
+    expect( numberValidator.isValid('+39 345 4455667') )
+      .toBeTruthy();
+  });
 	it('is an invalid number (+39 0)', function(){
 		expect(	numberValidator.isValid('+39 0') )
 			.toBeFalsy()
