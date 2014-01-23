@@ -1,36 +1,66 @@
-console.log( process.env.MONGO_URL );
-/**
- * Module dependencies.
- */
-
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
+/*
+	MODULES
+*/
+var express = require('express'),
+	phonebook = require('./phonebook'),
+	http = require('http');
 
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
+/*
+	Connect the phonebook to the collection contacts
+*/
+phonebook.connect( process.env.MONGO_URL, 'contacts', function(success){
+	if(!success){
+		console.log( "phonebook connection unsuccessfull" );
+		process.exit(1);
+	}
+	phonebook.exists(123, function(err,doc){
+		if( doc ){
+			console.log( "phonenumber is already in use" );
+		}else{
+			console.log( "phonenumber is available" );
+		}
+	});
+});
+
+
+/*
+	SETUP
+*/
+app.set('port', process.env.PORT || 3000); //PORT
+app.set('views', __dirname + '/views'); //views dir
+app.set('view engine', 'jade'); //use the Jade templating engine
+
+
+/*
+	MIDDLEWARES
+*/
+app.use(express.json()); //json middleware
+app.use(express.urlencoded()); //urlencoded middleware
+
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public')); //serve static files from the public directory
 
-// development only
-if ('development' == app.get('env')) {
-	app.use(express.errorHandler());
-}
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+/*
+	ROUTES
+*/
+app.get('/', function(req,res){
+	res.render('index');
+});
+app.get('/add', function(req,res){
+	res.render('add');
+});
+app.get('/edit/:id', function(req,res){
+	console.log( req.params.id );
+	res.render('edit');
+});
 
+
+/*
+	LAUNCH THE SERVER
+*/
 http.createServer(app).listen(app.get('port'), function(){
-	console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening on http://localhost:' + app.get('port'));
 });
