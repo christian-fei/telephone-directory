@@ -13,6 +13,14 @@ describe('numberValidator', function(){
 		expect(	numberValidator.isValid('+39 0') )
 			.toBeFalsy()
 	});
+  it('is an invalid number (+00 00f 000000)', function(){
+    expect( numberValidator.isValid('+00 00f 000000') )
+      .toBeFalsy()
+  });
+  it('is an invalid number (+00 00 0000)', function(){
+    expect( numberValidator.isValid('+00 00 0000') )
+      .toBeFalsy()
+  });
 	it('is an invalid number (null)', function(){
 		expect( numberValidator.isValid(null) )
 			.toBeFalsy();

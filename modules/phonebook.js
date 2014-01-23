@@ -1,6 +1,7 @@
 var mongodb = require('mongodb'),
 	colors = require('colors'),
-  teldirDB = null,
+	numberValidator = require('./numberValidator'),
+	teldirDB = null,
 	contactsColl = null;
 
 
@@ -26,15 +27,22 @@ function connect(url, collection, callback){
 			process.exit(1);
 		}
 		console.log( 'connected to mongo'.bold.green );
-    teldirDB = db;
+		teldirDB = db;
 		contactsColl = db.collection(collection);
 		callback(true);
 	});
 }
 
-function disconnect(){
-  teldirDB.close();
+
+
+/*
+	Used for testing purposes [jasmine needs to end the connection to the database, else it will run endlessly]
+*/
+function disconnect(callback){
+	teldirDB.close(callback);
 }
+
+
 
 
 /*
@@ -46,26 +54,96 @@ function disconnect(){
 				That is a "+" followed by a nonempty group of digits, a space, a nonempty group of digits, a space, a group of digits with at least 6 digits.
 		callback: [function]
 			function to be called after the async query
-			To the function two parameters will be passed:
-			err and doc.
-			If doc is null, it means the phonenumber is available, else it is already in use.
+			The first parameter will be a boolean that reports wether the specific phone number exists
+			If the collection is not ready yet, the first parameter will be null instead
 */
 function exists(number, callback){
-	if( contactsColl ){
+	if( contactsColl  ){
 		contactsColl.findOne({
 			numbers: {$in:[number]}
-		}, callback);
+		}, function(err,item){ //callback function of findOne
+			/*if there wasn't an error and the item results to be falsy, item doesn't exist*/
+			if( !err && !item){
+				callback(false);
+			}else{
+				callback(true);
+			}
+		});
 	}else{
+		/* collection is not ready yet */
 		callback(null);
 	}
 }
+
+
+
+
+
+/*
+	checks if the provided object literal is valid.
+	to be valid it should contain a field 'name', 'surname' and an array of phone numbers
+
+*/
+function isValidEntry(obj){
+	if(obj && obj instanceof Object && obj.name
+		 && obj.surname && obj.name.trim() && obj.surname.trim()
+		 	 && obj.numbers instanceof Array && obj.numbers.length > 0){
+		//test each number
+		for(var i=0,l=obj.numbers.length; i<l;i++){
+			if( !numberValidator.isValid( obj.numbers[i] ) ){
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+
+
+
+/*
+	Inserts a new phone book entry.
+
+	Params:
+		callback: [function]
+			function to be called after the async query
+			To the callback function will be passed one parameter [bool] that
+			reports wether the insert query was successful or not(already existing entry or DB error)      
+
+*/
+function insert(doc, callback){
+	contactsColl.insert(doc, function(err,item){
+		if( !err && item ){
+			callback(true);  
+		}else{
+			callback(false);
+		}
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
 	reveal public methods
 */
 module.exports = {
-  connect: connect,
+	connect: connect,
 	disconnect: disconnect,
+	isValidEntry: isValidEntry,
+	insert: insert,
 	exists: exists
 };
