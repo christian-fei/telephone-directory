@@ -8,7 +8,13 @@ var mongodb = require('mongodb'),
 	Params:
 		url: [string]
 			in the format: mongodb://<username>:<password>@host:port/<dbname>
-		collection 	
+		collection: [string]
+			the name of the collection that holds the contacts informations
+		callback: [function]
+			the callback will be called once the connection is established
+				or the connection failed
+			If successfull, the first param passed to the function will be true,
+				else false
 */
 function connect(url, collection, callback){
 	mongodb.connect(url, function(err,db){
