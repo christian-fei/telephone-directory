@@ -1,7 +1,7 @@
 var phonebook = require('../phonebook');
 
 describe('phonebook', function(){
-	/**
+	/**/
 	it('should connect to the database', function(done){
 		phonebook.connect( process.env.MONGO_URL, 'contacts', function(success){      
 			expect(success).toBeFalsy();
