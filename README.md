@@ -57,6 +57,7 @@ I've chosen [Heroku](https://heroku.com) as the PaaS of choice, so here are the 
 ```
 heroku apps:create [application name] --stack cedar
 heroku config:set MONGO_URL=[your Mongo URL]
+heroku ps:scale web=1
 git push heroku master
 heroku open
 ```
