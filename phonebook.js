@@ -1,5 +1,6 @@
 var mongodb = require('mongodb'),
 	colors = require('colors'),
+  teldirDB = null,
 	contactsColl = null;
 
 
@@ -25,9 +26,14 @@ function connect(url, collection, callback){
 			process.exit(1);
 		}
 		console.log( 'connected to mongo'.bold.green );
+    teldirDB = db;
 		contactsColl = db.collection(collection);
 		callback(true);
 	});
+}
+
+function disconnect(){
+  teldirDB.close();
 }
 
 
@@ -59,6 +65,7 @@ function exists(number, callback){
 	reveal public methods
 */
 module.exports = {
-	connect: connect,
+  connect: connect,
+	disconnect: disconnect,
 	exists: exists
 };
