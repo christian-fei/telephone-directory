@@ -22,13 +22,13 @@ The web app has three pages:
 
 - __Home page__
     - Contains a text field that allows to search through all the entries by name or number. When I enter text in the field, the page will be reloaded with a table containing all the entries that match the text I entered. The page contains a link to the "add new entry" page. When an entry is displayed, it contains a link to the "edit this entry" page.
-    - **path** : */*
+    - **path**  */*
 - __Add new entry page__
     - Contains a form for entering a new entry.
-    - **path** : */add*
+    - **path**  */add*
 - __Edit entry page__
     - Contains a form for modifying an existing entry.
-    - **path** : */edit/:id*
+    - **path**  */edit/:id*
 
 
 
