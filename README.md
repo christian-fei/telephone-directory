@@ -3,6 +3,9 @@ Telephone directory
 A simple exercise to learn a bit more about Heroku, CI and test driven development with Jasmine.
 The online version of this application can be found [here](http://telephone-directory.herokuapp.com/)
 
+
+
+
 #About
 This application is a very basic phone book with which you can save informations about a person's name, surname and phone number[s].
 I left out the whole auth system because it would go beyound the scope of this exercise.
@@ -27,6 +30,25 @@ The web app has three pages:
     - Contains a form for modifying an existing entry.
     - **path** : */edit/:id*
 
+
+
+
+#Tests
+The testing suite is `jasmine-node`.
+
+To run the tests:
+
+```
+npm test
+#or
+jasmine-node .
+#or to watch tests
+jasmine-node . --watch --autotest --growl
+```
+
+
+
+
 #Deployment
 ###heroku
 
@@ -38,6 +60,7 @@ heroku config:set MONGO_URL=[your Mongo URL]
 git push heroku master
 heroku open
 ```
+
 
 ###locally
 This application uses Node and MongoDB, so both need to be installed on your system.
@@ -68,19 +91,6 @@ to start the app.
 
 
 
-
-#Tests
-The testing suite is `jasmine-node`.
-
-To run the tests:
-
-```
-npm test
-#or
-jasmine-node .
-#or to watch tests
-jasmine-node . --watch --autotest --growl
-```
 
 
 
