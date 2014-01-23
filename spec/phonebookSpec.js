@@ -1,20 +1,18 @@
 var phonebook = require('../phonebook');
 
 describe('phonebook', function(){
-	/*
-	it('', function(){
-		var contains;
+	/**/
+	it('should connect to the database', function(done){
+		phonebook.connect( process.env.MONGO_URL, 'contacts', function(success){      
+			expect(success).toBeTruthy();
+			done();
+		});
+	},3000);
+	it('should result be an existing number', function(done){
 		phonebook.exists(123, function(err,doc){
-			contains = doc;
+			expect(doc).toBeTruthy();
+			done();
 		});
-
-		waitsFor(function(){
-			return contains;
-		}, 'contains number', 5000);
-
-		runs(function(){
-			expect(contains).not.toBe(null);
-		});
-	});
-	*/
+	},3000);
+	/**/
 });
