@@ -1,4 +1,4 @@
-var numberValidator = require('../numberValidator');
+var numberValidator = require('../modules/numberValidator');
 
 describe('numberValidator', function(){
 	it('is a valid number (+39 0471 707090)', function(){

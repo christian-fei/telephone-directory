@@ -1,4 +1,4 @@
-var phonebook = require('../phonebook');
+var phonebook = require('../modules/phonebook');
 
 describe('phonebook', function(){
   /**/

@@ -2,7 +2,8 @@
 	MODULES
 */
 var express = require('express'),
-	phonebook = require('./phonebook'),
+  phonebook = require('./modules/phonebook'),
+	numberValidator = require('./modules/numberValidator'),
 	http = require('http');
 
 var app = express();
