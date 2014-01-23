@@ -1,7 +1,20 @@
 var phonebook = require('../phonebook');
 
 describe('phonebook', function(){
-	it('contains the telephone number 123', function(){
-		expect( 123 ).toBeTruthy();
+	/*
+	it('', function(){
+		var contains;
+		phonebook.exists(123, function(err,doc){
+			contains = doc;
+		});
+
+		waitsFor(function(){
+			return contains;
+		}, 'contains number', 5000);
+
+		runs(function(){
+			expect(contains).not.toBe(null);
+		});
 	});
+	*/
 });

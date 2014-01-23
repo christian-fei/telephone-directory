@@ -2,6 +2,7 @@ var mongodb = require('mongodb'),
 	colors = require('colors'),
 	contactsColl = null;
 
+
 /*
 	Connect the phonebook to a Mongo database and collection
 
@@ -28,6 +29,7 @@ function connect(url, collection, callback){
 		callback(true);
 	});
 }
+
 
 /*
 	Check if a specific phone number is already in use.
@@ -57,6 +59,6 @@ function exists(number, callback){
 	reveal public methods
 */
 module.exports = {
-	exists: exists,
-	connect: connect
+	connect: connect,
+	exists: exists
 };
