@@ -12,16 +12,9 @@ var app = express();
 */
 phonebook.connect( process.env.MONGO_URL, 'contacts', function(success){
 	if(!success){
-		console.log( "phonebook connection unsuccessfull" );
+		console.log( "phonebook connection unsuccessfull".red );
 		process.exit(1);
 	}
-	phonebook.exists(123, function(err,doc){
-		if( doc ){
-			console.log( "phonenumber is already in use" );
-		}else{
-			console.log( "phonenumber is available" );
-		}
-	});
 });
 
 
