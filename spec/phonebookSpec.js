@@ -31,7 +31,6 @@ describe('phonebook', function(){
 
   it('should insert a new phonebook entry', function(done){
     phonebook.insert(validEntry, function(doc){
-      console.log( doc );
       insertedId = doc._id;
       expect( doc ).toBeTruthy();
       done();
@@ -52,10 +51,16 @@ describe('phonebook', function(){
     });
   },3000);
 
+  it('should return an array of results', function(done){
+    phonebook.getEntries(10, function(results){
+      console.log( results );
+      expect( results ).toBeTruthy();
+      done();
+    });
+  },3000);
+
   it('should remove the previously inserted document by id', function(done){
-    console.log("insertedId " + insertedId);
     phonebook.remove(insertedId, function(success){
-      console.log( success );
       expect( success ).toBeTruthy();
       done();
     });
