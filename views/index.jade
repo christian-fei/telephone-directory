@@ -1,5 +1,11 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
+	ul.entries
+		for entry in entries
+			li
+				span.name #{entry.name}
+				span.surname #{entry.surname}
+				span.number #{entry.number}
+		else
+			li no entries yet!

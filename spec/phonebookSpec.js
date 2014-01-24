@@ -3,12 +3,12 @@ var phonebook = require('../modules/phonebook');
 var validEntry = {
   name:     "Christian",
   surname:  "Fei",
-  numbers:  ["+00 00 000000"]
+  number:  "+00 00 000000"
 };
 var invalidEntry = {
   name:     "Christian",
   surname:  "Fei",
-  numbers:  ["+0000 01 000000","+00 00 0000"]
+  number:  "+00 00 0000"
 };
 
 var insertedId = null;
@@ -64,8 +64,7 @@ describe('phonebook', function(){
       expect( success ).toBeTruthy();
       done();
     });
-  },3000);  
-
+  },3000);
 
   it('should close the connection to the database', function(done){
       phonebook.disconnect(function(err,res){

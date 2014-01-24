@@ -61,7 +61,7 @@ function disconnect(callback){
 function exists(number, callback){
 	if( contacts  ){
 		contacts.findOne({
-			numbers: {$in:[number]}
+			number: number
 		}, function(err,item){ //callback function of findOne
 			/*if there wasn't an error and the item results to be falsy, item doesn't exist*/
 			if( !err && !item){
@@ -88,14 +88,8 @@ function exists(number, callback){
 function isValidEntry(obj){
 	if(obj && obj instanceof Object && obj.name
 		 && obj.surname && obj.name.trim() && obj.surname.trim()
-		 	 && obj.numbers instanceof Array && obj.numbers.length > 0){
-		//test each number
-		for(var i=0,l=obj.numbers.length; i<l;i++){
-			if( !numberValidator.isValid( obj.numbers[i] ) ){
-				return false;
-			}
-		}
-		return true;
+		 	 && obj.number){
+    return numberValidator.isValid( obj.number );
 	}
 	return false;
 }
@@ -115,13 +109,19 @@ function isValidEntry(obj){
 */
 function insert(doc, callback){
   if( isValidEntry(doc) ){
-    contacts.insert(doc, function(err,item){
-      if( !err && item ){
-        callback(item[0]);  
+    exists( doc.number, function(exists){
+      if( !exists ){
+        contacts.insert(doc, function(err,item){
+          if( !err && item ){
+            callback(item[0]);  
+          }else{
+            callback(false);
+          }
+        }); 
       }else{
         callback(false);
       }
-    }); 
+    });
   }else{
     callback(false);
   }
@@ -151,7 +151,7 @@ function remove(id, callback){
 
 
 /*
-  get a list of available phonenumbers
+  get a list of available numbers
 
   Params:
     limit: [int]

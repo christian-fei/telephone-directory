@@ -41,13 +41,24 @@ app.use(express.static(__dirname + '/public')); //serve static files from the pu
 	ROUTES
 */
 app.get('/', function(req,res){
-	res.render('index');
+  phonebook.getEntries(10, function(entries){
+    res.render('index', {entries: entries});
+  });
 });
 app.get('/add', function(req,res){
 	res.render('add');
 });
+app.post('/add', function(req,res){
+  var entry = req.body;
+  phonebook.insert(entry, function(doc){
+    /* redirect the post request */
+    res.writeHead(302, {
+      'Location': '/'
+    });
+    res.end();
+  });
+});
 app.get('/edit/:id', function(req,res){
-	console.log( req.params.id );
 	res.render('edit');
 });
 
