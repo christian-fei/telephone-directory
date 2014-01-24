@@ -11,6 +11,8 @@ var invalidEntry = {
   numbers:  ["+0000 01 000000","+00 00 0000"]
 };
 
+var insertedId = null;
+
 
 describe('phonebook', function(){
   it('should connect to the database', function(done){
@@ -28,27 +30,37 @@ describe('phonebook', function(){
   });
 
   it('should insert a new phonebook entry', function(done){
-    phonebook.insert(validEntry, function(success){
-      expect( success ).toBeTruthy();
+    phonebook.insert(validEntry, function(doc){
+      console.log( doc );
+      insertedId = doc._id;
+      expect( doc ).toBeTruthy();
       done();
     });
   },3000);
 
   it('should result in a duplicate phonebook entry', function(done){
-    phonebook.insert(validEntry, function(success){
-      expect( success ).toBeFalsy();
+    phonebook.insert(validEntry, function(doc){
+      expect( doc ).toBeFalsy();
       done();
     });
   },3000);  
 
-  /**
   it('should result in an existing number', function(done){
     phonebook.exists("+00 00 000000", function(success){
       expect( success ).toBeTruthy();
       done();
     });
   },3000);
-  /**/
+
+  it('should remove the previously inserted document by id', function(done){
+    console.log("insertedId " + insertedId);
+    phonebook.remove(insertedId, function(success){
+      console.log( success );
+      expect( success ).toBeTruthy();
+      done();
+    });
+  },3000);  
+
 
   it('should close the connection to the database', function(done){
       phonebook.disconnect(function(err,res){

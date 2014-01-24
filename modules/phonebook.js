@@ -1,6 +1,7 @@
 var mongodb = require('mongodb'),
-	colors = require('colors'),
-	numberValidator = require('./numberValidator'),
+  colors = require('colors'),
+  BSON = mongodb.BSONPure,
+ 	numberValidator = require('./numberValidator'),
 	teldirDB = null,
 	contactsColl = null;
 
@@ -107,24 +108,49 @@ function isValidEntry(obj){
 
 	Params:
 		callback: [function]
-			function to be called after the async query
-			To the callback function will be passed one parameter [bool] that
-			reports wether the insert query was successful or not(already existing entry or DB error)      
-
+      function to be called after the async query
+      To the callback function will be passed one parameter
+      the inserted document representation
+        or false if the query was unsuccessful
 */
 function insert(doc, callback){
-	contactsColl.insert(doc, function(err,item){
-		if( !err && item ){
-			callback(true);  
-		}else{
-			callback(false);
-		}
-	})
+  if( isValidEntry(doc) ){
+    contactsColl.insert(doc, function(err,item){
+      if( !err && item ){
+        callback(item[0]);  
+      }else{
+        callback(false);
+      }
+    }); 
+  }else{
+    callback(false);
+  }
 }
 
 
+/*
+  Deletes an existing phone book entry
 
+  Params:
+    callback: [function]
+      function to be called after the async query
+      To the callback function will be passed one parameter [bool] that
+      reports wether the delete query was successful or not
 
+*/
+function remove(id, callback){
+  console.log( "id " + id );
+  //var objid = new BSON.ObjectID(id);
+  //console.log( "objid " + objid );
+  contactsColl.remove({_id: id}, function(err,numberRemovedItems){
+    console.log( err, numberRemovedItems );
+    if( !err && numberRemovedItems ){
+      callback(true);
+    }else{
+      callback(false);
+    }
+  });
+}
 
 
 
@@ -144,6 +170,7 @@ module.exports = {
 	connect: connect,
 	disconnect: disconnect,
 	isValidEntry: isValidEntry,
-	insert: insert,
+  insert: insert,
+	remove: remove,
 	exists: exists
 };
