@@ -2,8 +2,8 @@ var mongodb = require('mongodb'),
   colors = require('colors'),
   BSON = mongodb.BSONPure,
  	numberValidator = require('./numberValidator'),
-	teldirDB = null,
-	contactsColl = null;
+	db = null,
+	contacts = null;
 
 
 /*
@@ -21,15 +21,15 @@ var mongodb = require('mongodb'),
 				else false
 */
 function connect(url, collection, callback){
-	mongodb.connect(url, function(err,db){
+	mongodb.connect(url, function(err, _db){
 		if( err ){
 			console.log( 'there was an error connecting to mongo'.bold.red );
 			callback(false);
 			process.exit(1);
 		}
 		console.log( 'connected to mongo'.bold.green );
-		teldirDB = db;
-		contactsColl = db.collection(collection);
+		db =  _db;
+		contacts = db.collection(collection);
 		callback(true);
 	});
 }
@@ -40,7 +40,7 @@ function connect(url, collection, callback){
 	Used for testing purposes [jasmine needs to end the connection to the database, else it will run endlessly]
 */
 function disconnect(callback){
-	teldirDB.close(callback);
+	db.close(callback);
 }
 
 
@@ -59,8 +59,8 @@ function disconnect(callback){
 			If the collection is not ready yet, the first parameter will be null instead
 */
 function exists(number, callback){
-	if( contactsColl  ){
-		contactsColl.findOne({
+	if( contacts  ){
+		contacts.findOne({
 			numbers: {$in:[number]}
 		}, function(err,item){ //callback function of findOne
 			/*if there wasn't an error and the item results to be falsy, item doesn't exist*/
@@ -115,7 +115,7 @@ function isValidEntry(obj){
 */
 function insert(doc, callback){
   if( isValidEntry(doc) ){
-    contactsColl.insert(doc, function(err,item){
+    contacts.insert(doc, function(err,item){
       if( !err && item ){
         callback(item[0]);  
       }else{
@@ -139,11 +139,7 @@ function insert(doc, callback){
 
 */
 function remove(id, callback){
-  console.log( "id " + id );
-  //var objid = new BSON.ObjectID(id);
-  //console.log( "objid " + objid );
-  contactsColl.remove({_id: id}, function(err,numberRemovedItems){
-    console.log( err, numberRemovedItems );
+  contacts.remove({_id: id}, function(err,numberRemovedItems){
     if( !err && numberRemovedItems ){
       callback(true);
     }else{
@@ -154,6 +150,24 @@ function remove(id, callback){
 
 
 
+/*
+  get a list of available phonenumbers
+
+  Params:
+    limit: [int]
+      limit the number of entries returned
+    callback: [function]
+      to the callback function will be passed an array of entries or null if there was an error
+*/
+function getEntries(limit, callback){
+  contacts.find({},{limit: limit}).toArray(function(err, result){
+    if( err ){
+      callback(null);
+    }else{
+      callback(result);
+    }
+  });
+}
 
 
 
@@ -171,6 +185,7 @@ module.exports = {
 	disconnect: disconnect,
 	isValidEntry: isValidEntry,
   insert: insert,
-	remove: remove,
+  remove: remove,
+	getEntries: getEntries,
 	exists: exists
 };
