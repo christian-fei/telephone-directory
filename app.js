@@ -41,14 +41,24 @@ app.use(express.static(__dirname + '/public')); //serve static files from the pu
 	ROUTES
 */
 app.get('/', function(req,res){
+  /*
+    render a list of entries if any
+  */
   phonebook.getEntries(10, function(entries){
     res.render('index', {entries: entries});
   });
 });
 app.get('/add', function(req,res){
-	res.render('add');
+  /*
+    render the add form
+  */
+  res.render('form',{name:'add'});
 });
 app.post('/add', function(req,res){
+  /*
+    insert (if not existing and valid)
+    and redirect to / with GET
+  */
   var entry = req.body;
   phonebook.insert(entry, function(doc){
     /* redirect the post request */
@@ -59,7 +69,38 @@ app.post('/add', function(req,res){
   });
 });
 app.get('/edit/:id', function(req,res){
-	res.render('edit');
+  /*
+    render the edit form
+    with the prefilled fields
+  */
+  var id = req.params.id;
+  phonebook.getEntry(id, function(entry){
+    console.log( entry );
+    if(entry){
+      res.render('form',{name:'edit', entry: entry});
+    }else{
+      res.render('form',{name:'add'});
+    }
+  });
+});
+app.post('/edit', function(req,res){
+  /*
+    update the entry with the updated information
+  */
+  /**/
+  var id = req.body.id,
+    doc = req.body;
+
+  console.log( doc );
+
+  phonebook.update(id, doc, function(success){
+    console.log( success );
+    res.writeHead(302, {
+      'Location': '/'
+    });
+    res.end();
+  });
+  /**/
 });
 
 

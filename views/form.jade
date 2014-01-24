@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	h3 #{name} a phonebook entry
+	form(action='/#{name}',method='post')
+		input(type='hidden', name='id', value=entry ? entry._id : '')
+		label(for='name') name
+		input(type='text', id='name', name='name', placeholder='name', value=entry ? entry.name : '')
+		br
+		label(for='surname') surname
+		input(type='text', id='surname', name='surname', placeholder='surname', value=entry ? entry.surname : '')
+		br
+		label(for='number') number
+		input(type='text', id='number', name='number', placeholder='+39 345 445566', value=entry ? entry.number : '')
+		br
+		input(type='submit', value='Add')

@@ -1,6 +1,5 @@
 var mongodb = require('mongodb'),
   colors = require('colors'),
-  BSON = mongodb.BSONPure,
  	numberValidator = require('./numberValidator'),
 	db = null,
 	contacts = null;
@@ -27,7 +26,7 @@ function connect(url, collection, callback){
 			callback(false);
 			process.exit(1);
 		}
-		console.log( 'connected to mongo'.bold.green );
+		//console.log( 'connected to mongo'.bold.green );
 		db =  _db;
 		contacts = db.collection(collection);
 		callback(true);
@@ -59,7 +58,7 @@ function disconnect(callback){
 			If the collection is not ready yet, the first parameter will be null instead
 */
 function exists(number, callback){
-	if( contacts  ){
+	if( contacts ){
 		contacts.findOne({
 			number: number
 		}, function(err,item){ //callback function of findOne
@@ -127,6 +126,32 @@ function insert(doc, callback){
   }
 }
 
+/*
+  Update an existing phone book entry.
+
+  Params:
+    callback: [function]
+      function to be called after the async query
+      To the callback function will be passed one parameter
+      true if the update was successful
+        or false if unsuccessful
+*/
+function update(id, doc, callback){
+  if( isValidEntry(doc) ){
+    contacts.update({_id: id}, 
+      {name: doc.name, surname:doc.surname, number: doc.number},
+      function(err, updatedCount){
+        console.log('update',err, updatedCount);
+        if( !err && updatedCount ){
+          callback(true);
+        }else{
+          callback(false);
+        }
+    }); 
+  }else{
+    callback(false);
+  }
+}
 
 /*
   Deletes an existing phone book entry
@@ -149,6 +174,28 @@ function remove(id, callback){
 }
 
 
+
+/*
+  get a single entry
+
+  Params:
+    callback: [function]
+      to the callback function will be passed the entry or null if not found (or error)
+*/
+function getEntry(id, callback){
+  if( id ){
+    contacts.findOne({_id: new mongodb.ObjectID(id)},function(err, doc){
+      console.log('getEntry', err,doc);
+      if( err ){
+        callback(null);
+      }else{
+        callback(doc);
+      }
+    });
+  }else{
+    callback(null);
+  }
+}
 
 /*
   get a list of available numbers
@@ -185,7 +232,9 @@ module.exports = {
 	disconnect: disconnect,
 	isValidEntry: isValidEntry,
   insert: insert,
+  update: update,
   remove: remove,
+  getEntry: getEntry,
 	getEntries: getEntries,
 	exists: exists
 };

@@ -5,6 +5,11 @@ var validEntry = {
   surname:  "Fei",
   number:  "+00 00 000000"
 };
+var updatedValidEntry = {
+  name:     "ChristianUpdated",
+  surname:  "FeiUpdated",
+  number:  "+00 00 000001"
+};
 var invalidEntry = {
   name:     "Christian",
   surname:  "Fei",
@@ -32,6 +37,7 @@ describe('phonebook', function(){
   it('should insert a new phonebook entry', function(done){
     phonebook.insert(validEntry, function(doc){
       insertedId = doc._id;
+      //console.log( doc );
       expect( doc ).toBeTruthy();
       done();
     });
@@ -51,9 +57,16 @@ describe('phonebook', function(){
     });
   },3000);
 
+  it('should update an existing entry', function(done){
+    phonebook.update(insertedId, updatedValidEntry, function(success){
+      expect( success ).toBeTruthy();
+      done();
+    });
+  },3000);
+
   it('should return an array of results', function(done){
     phonebook.getEntries(10, function(results){
-      console.log( results );
+      //console.log( results );
       expect( results ).toBeTruthy();
       done();
     });
