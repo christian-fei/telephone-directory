@@ -5,6 +5,12 @@ html
 		link(rel='stylesheet', href='/assets/css/style.css')
 		meta(name='viewport', content='width=device-width')
 	body
-		h1 Telephone directory
-		block content
+		.container
+			h1 Telephone directory
+			nav.menu
+				a(href='/') home
+				a(href='/add') add
+				a(href='#', class='search-toggle') search
+				input(type='text', class='search-input', placeholder='search by name or number')
+			block content
 		script(src='/assets/js/main.js')

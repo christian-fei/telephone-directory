@@ -1,11 +1,6 @@
 extends layout
 
 block content
-	nav.menu
-		a(href='/') home
-		a(href='/add') add
-		a(href='#', class='search-toggle') search
-		input(type='text', class='search-input', placeholder='search by name or number')
 	ul.entries
 		for entry in entries
 			li

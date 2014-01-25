@@ -232,13 +232,10 @@ function getEntries(limit, callback){
 */
 function search(query, callback){
   var onlyNumbers = /^\+?[0-9]{1,15}/;
-  console.log( query );
   query = decodeURIComponent(query);
   /* else the regex would fail, because there are no characters to repeat after/before the + */
   query = query.replace('+','');
-  console.log( query );
   if( onlyNumbers.test(query) ){
-    console.log( 'searching number' );
     contacts.find({number: new RegExp(query)}).toArray(function(err,results){
       if( !err ){
         callback( results );
@@ -247,7 +244,8 @@ function search(query, callback){
       }
     });
   }else{
-    console.log( 'searching name' );
+    /* fuzzy search */
+    query = query.split('').join('.*');
     contacts.find({$or: [{name: new RegExp(query, 'gi')},{surname: new RegExp(query, 'gi')}]}).toArray(function(err,results){
       if( !err ){
         callback( results );

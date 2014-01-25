@@ -31,6 +31,10 @@ The web app has three pages:
     - Contains a form for modifying an existing entry.
     - **path**  */edit/:id*
 
+I've added the ability to search for name and for phonenumbers. If the user is searching by phonenumber, the entries that partially match the criteria will be shown.
+When searching for name, the web app searches the database with a fuzzy search, to return search results even if the user mistyped a letter:
+
+e.g: 'Mrc' will match 'Marco' and 'Marc'
 
 
 
