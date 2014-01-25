@@ -1,6 +1,11 @@
 var searchToggle = document.querySelector('.search-toggle');
 var searchInput = document.querySelector('.search-input');
 
+//register events for the search input field and toggle
+searchToggle.addEventListener('click', toggleSearch, true);
+searchInput.addEventListener('keyup', search, true)
+
+
 /*
   to restore the original list if the search query is not valid
 */
@@ -63,7 +68,18 @@ function renderSearchResults(results){
     entries.innerHTML += output;
   });
 }
-if(searchToggle && searchInput){
-  searchToggle.addEventListener('click', toggleSearch, true);
-  searchInput.addEventListener('keyup', search, true)
+
+var numberInput = document.querySelector('input#number'); 
+if( numberInput ){
+  console.log( 'haz number' );
+  numberInput.addEventListener('keyup', checkNumber, true);
+}
+function checkNumber(){
+    if( !/^\+[0-9]{2,4} [0-9]{2,4} [0-9]{6,15}$/.test(numberInput.value) ){
+      numberInput.classList.add('error');
+      if( !numberInput.classList.contains('error') ){
+      }
+    }else{
+        numberInput.classList.remove('error');
+    }
 }

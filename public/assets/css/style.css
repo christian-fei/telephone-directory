@@ -67,6 +67,16 @@ form div > label{
     padding: .5em 1.5em;
     margin: .5em auto;
   }
+  .error{
+    border: 2px solid red;
+  }
+  .error:after{
+    display: inline-block;
+    content: 'invalid number';
+    font-size: 1em;
+    height: 1em;
+    width: 20em;
+  }
   
 .search-input{
   display: none;
