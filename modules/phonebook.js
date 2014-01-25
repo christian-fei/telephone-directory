@@ -88,7 +88,7 @@ function isValidEntry(obj){
   var onlyLetters = /^[a-zA-Z]+/;
 	if(obj && obj instanceof Object && obj.name
 		 && obj.surname && obj.name.trim() && obj.surname.trim()
-		 	 && obj.number && onlyLetters.test(obj.name) && onlyLetters.test(obj.surname)){
+		 	 && obj.number && obj.name.length < 20 && obj.surname.length < 20 && onlyLetters.test(obj.name) && onlyLetters.test(obj.surname)){
     return numberValidator.isValid( obj.number );
 	}
 	return false;
