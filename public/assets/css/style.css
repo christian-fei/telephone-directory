@@ -32,6 +32,19 @@ li span{
   margin-right: .4em;
 }
 
+.menu{
+  background-color: #DFDFDF;
+  margin-bottom: 2em;
+}
+  .menu a, .menu input{
+    padding: .75em;
+    color:#333;
+    border:none;
+    outline:none;
+  }
+  .menu a:hover{
+    background-color: #CACACA;
+  }
 
 form div > *{
   width: 70%;

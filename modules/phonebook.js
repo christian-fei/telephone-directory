@@ -82,12 +82,13 @@ function exists(number, callback){
 /*
 	checks if the provided object literal is valid.
 	to be valid it should contain a field 'name', 'surname' and an array of phone numbers
-
+  name and surname can only contain letters and spaces 
 */
 function isValidEntry(obj){
+  var onlyLetters = /^[a-zA-Z]+/;
 	if(obj && obj instanceof Object && obj.name
 		 && obj.surname && obj.name.trim() && obj.surname.trim()
-		 	 && obj.number){
+		 	 && obj.number && onlyLetters.test(obj.name) && onlyLetters.test(obj.surname)){
     return numberValidator.isValid( obj.number );
 	}
 	return false;
