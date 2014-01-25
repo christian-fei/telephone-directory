@@ -37,9 +37,13 @@ function search(){
       if( xhr.status == 200 && xhr.readyState == 4 ){
         try{
           var results = JSON.parse( xhr.responseText );
-          entries.innerHTML = '';
-          console.log( results );
-          renderSearchResults( results );
+          if( results.length ){
+            entries.innerHTML = '';
+            renderSearchResults( results );
+          }else{
+            entries.innerHTML = '<h4>no entry matched your search criteria</h4>';            
+            entries.innerHTML += origList;            
+          }
         }catch(e){
           console.log( e );
         }
