@@ -68,9 +68,13 @@ form div > label{
     margin: .5em auto;
   }
   .error{
+    position: relative;
     border: 2px solid red;
+    display: inline-block;
   }
-  .error:after{
+  .error::after{
+    position: absolute;
+    right: - 1em;
     display: inline-block;
     content: 'invalid number';
     font-size: 1em;

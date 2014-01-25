@@ -69,17 +69,16 @@ function renderSearchResults(results){
   });
 }
 
+/**
 var numberInput = document.querySelector('input#number'); 
 if( numberInput ){
-  console.log( 'haz number' );
   numberInput.addEventListener('keyup', checkNumber, true);
 }
 function checkNumber(){
     if( !/^\+[0-9]{2,4} [0-9]{2,4} [0-9]{6,15}$/.test(numberInput.value) ){
       numberInput.classList.add('error');
-      if( !numberInput.classList.contains('error') ){
-      }
     }else{
-        numberInput.classList.remove('error');
+      numberInput.classList.remove('error');
     }
 }
+/**/
