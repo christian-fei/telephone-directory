@@ -217,7 +217,37 @@ function getEntries(limit, callback){
 }
 
 
+/*
+  search by name or phonenumber
 
+  Params:
+    query: [string]
+      It can contain letters and numbers
+      if there are only numbers, only phonenumbers will be searched
+      if there are letters too, it will be searched by name
+*/
+function search(query, callback){
+  var onlyNumbers = /^\+?[0-9]{1,15}/;
+  if( onlyNumbers.test(query) ){
+    console.log( 'searching number' );
+    contacts.find({number: new RegExp(query)}).toArray(function(err,results){
+      if( !err ){
+        callback( results );
+      }else{
+        callback( [] );
+      }
+    });
+  }else{
+    console.log( 'searching name' );
+    contacts.find({$or: [{name: new RegExp(query)},{surname: new RegExp(query)}]}).toArray(function(err,results){
+      if( !err ){
+        callback( results );
+      }else{
+        callback( [] );
+      }
+    });
+  }
+}
 
 
 
@@ -235,6 +265,7 @@ module.exports = {
   update: update,
   remove: remove,
   getEntry: getEntry,
-	getEntries: getEntries,
+  getEntries: getEntries,
+	search: search,
 	exists: exists
 };

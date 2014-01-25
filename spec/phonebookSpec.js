@@ -65,7 +65,14 @@ describe('phonebook', function(){
 
   it('should return an array of results', function(done){
     phonebook.getEntries(10, function(results){
-      //console.log( results );
+      expect( results ).toBeTruthy();
+      done();
+    });
+  },3000);
+
+  it('should return an array of search results', function(done){
+    phonebook.search('Christian', function(results){
+      console.log( results );
       expect( results ).toBeTruthy();
       done();
     });

@@ -8,3 +8,10 @@ a {
   color: #00B7FF;
   padding: .2em;
 }
+
+.search-input{
+  display: none;
+}
+.search-input.show{
+  display: inline-block;
+}

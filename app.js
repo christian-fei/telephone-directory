@@ -141,12 +141,24 @@ app.post('/edit', function(req,res){
   });
 });
 
+/*
+  delete an entry by its id and get redirect to the home page
+*/
 app.get('/delete/:id', function(req,res){
   var id = req.params.id;
   phonebook.remove(id, function(success){
     redirectTo(res, '/');
   });
 });
+
+app.get('/search/:query', function(req,res){
+  var query = req.params.query;
+  phonebook.search(query, function(results){
+    res.json( results );
+    res.end();
+  });
+});
+
 
 
 
