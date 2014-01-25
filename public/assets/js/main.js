@@ -15,9 +15,7 @@ var searchResultTemplate = '<li><span class="name">{name}</span><span class="sur
 */
 var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 
-/*
-  the search toggle only exists on the home page
-*/
+
 function toggleSearch(e){
   e.preventDefault();
   setTimeout(function(){

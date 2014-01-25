@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	ul.entries
 	h3 #{name} a phonebook entry
 	form(action='/#{name}',method='post')
 		input(type='hidden', name='id', value=entry ? entry._id : '')
