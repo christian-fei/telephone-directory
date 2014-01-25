@@ -151,6 +151,11 @@ app.get('/delete/:id', function(req,res){
   });
 });
 
+/*
+  search endpoint, the query can be a decoded (encodeURIComponent) string,
+  consisting of numbers and  with spaces [search by number],
+  or letters [search by name]
+*/
 app.get('/search/:query', function(req,res){
   var query = req.params.query;
   phonebook.search(query, function(results){

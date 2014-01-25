@@ -8,7 +8,7 @@ var entries = document.querySelector('.entries');
 var origList = entries ? entries.innerHTML : '';
 
 /* template of search results */
-var searchResultTemplate = '<li><span class="name">{name}</span><span class="surname">{surname}</span><span class="number">{number}</span><a href="/edit/{id}" class="edit">edit</a><a href="/delete/{id}" class="delete">delete</a></li>'
+var searchResultTemplate = '<li><span class="name">{name}</span><span class="surname">{surname}</span><span class="number">{number}</span><a href="/edit/{_id}" class="edit">edit</a><a href="/delete/{_id}" class="delete">delete</a></li>'
 
 /*
   the XMLHttpRequest to retrieve search results from the server
@@ -20,6 +20,9 @@ var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Mi
 */
 function toggleSearch(e){
   e.preventDefault();
+  setTimeout(function(){
+    searchInput.focus();
+  },100);
   searchInput.classList.toggle('show');
 }
 function search(){
