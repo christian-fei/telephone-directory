@@ -1,15 +1,3 @@
-
-Subject:
-esercizio telephone directory web application
-From:
-Pietro Di Bello <pietro.dibello@xpeppers.com>
-Date:
-01/22/2014 09:58 AM
-To:
-info@christian-fei.com
-CC:
-"trento@xpeppers.com" <trento@xpeppers.com>
-
 Ciao Christian, 
 ecco l'esercizio da svolgere offline e consegnare entro domenica sera.
 
