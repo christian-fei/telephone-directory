@@ -8,7 +8,7 @@ var entries = document.querySelector('.entries');
 var origList = entries ? entries.innerHTML : '';
 
 /* template of search results */
-var searchResultTemplate = '<li><span class="name">{name}</span><span class="surname">{surname}</span><span class="number">{number}</span><a href="/edit/{_id}" class="edit">edit</a><a href="/delete/{_id}" class="delete">delete</a></li>'
+var searchResultTemplate = '<li><span class="name">{name}</span><span class="surname">{surname}</span><span class="number">{number}</span><a href="/edit/{_id}" class="icon edit"></a><a href="/delete/{_id}" class="icon delete"></a></li>'
 
 /*
   the XMLHttpRequest to retrieve search results from the server

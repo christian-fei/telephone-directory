@@ -7,7 +7,7 @@ block content
 				span.name #{entry.name}
 				span.surname #{entry.surname}
 				span.number #{entry.number}
-				a(href='/edit/#{entry._id}', class='edit') edit
-				a(href='/delete/#{entry._id}', class='delete') delete
+				a(href='/edit/#{entry._id}', class='icon edit')
+				a(href='/delete/#{entry._id}', class='icon delete')
 		else
 			li no entries yet!
