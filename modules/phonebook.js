@@ -138,7 +138,7 @@ function insert(doc, callback){
 */
 function update(id, doc, callback){
   if( isValidEntry(doc) ){
-    contacts.update({_id: id}, 
+    contacts.update({_id: new mongodb.ObjectID(id)}, 
       {name: doc.name, surname:doc.surname, number: doc.number},
       function(err, updatedCount){
         console.log('update',err, updatedCount);
@@ -164,7 +164,7 @@ function update(id, doc, callback){
 
 */
 function remove(id, callback){
-  contacts.remove({_id: id}, function(err,numberRemovedItems){
+  contacts.remove({_id: new mongodb.ObjectID(id)}, function(err,numberRemovedItems){
     if( !err && numberRemovedItems ){
       callback(true);
     }else{

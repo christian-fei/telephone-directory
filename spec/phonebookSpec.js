@@ -36,8 +36,7 @@ describe('phonebook', function(){
 
   it('should insert a new phonebook entry', function(done){
     phonebook.insert(validEntry, function(doc){
-      insertedId = doc._id;
-      //console.log( doc );
+      insertedId = '' + doc._id;
       expect( doc ).toBeTruthy();
       done();
     });
