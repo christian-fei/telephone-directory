@@ -137,7 +137,7 @@ function insert(doc, callback){
         or false if unsuccessful
 */
 function update(id, doc, callback){
-  if( isValidEntry(doc) ){
+  if( isValidEntry(doc) && id.length == 24 ){
     contacts.update({_id: new mongodb.ObjectID(id)}, 
       {name: doc.name, surname:doc.surname, number: doc.number},
       function(err, updatedCount){
@@ -164,13 +164,17 @@ function update(id, doc, callback){
 
 */
 function remove(id, callback){
-  contacts.remove({_id: new mongodb.ObjectID(id)}, function(err,numberRemovedItems){
-    if( !err && numberRemovedItems ){
-      callback(true);
-    }else{
-      callback(false);
-    }
-  });
+  if( id.length == 24 ){
+    contacts.remove({_id: new mongodb.ObjectID(id)}, function(err,numberRemovedItems){
+      if( !err && numberRemovedItems ){
+        callback(true);
+      }else{
+        callback(false);
+      }
+    });
+  }else{
+    callback(false);
+  }
 }
 
 
@@ -183,7 +187,7 @@ function remove(id, callback){
       to the callback function will be passed the entry or null if not found (or error)
 */
 function getEntry(id, callback){
-  if( id ){
+  if( id && id.length == 24){
     contacts.findOne({_id: new mongodb.ObjectID(id)},function(err, doc){
       console.log('getEntry', err,doc);
       if( err ){
