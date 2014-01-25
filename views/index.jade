@@ -7,9 +7,10 @@ block content
 	ul.entries
 		for entry in entries
 			li
-				a(href='/edit/#{entry._id}')
-					span.name #{entry.name}
-					span.surname #{entry.surname}
-					span.number #{entry.number}
+				span.name #{entry.name}
+				span.surname #{entry.surname}
+				span.number #{entry.number}
+				a(href='/edit/#{entry._id}', class='edit') edit
+				a(href='/delete/#{entry._id}', class='delete') delete
 		else
 			li no entries yet!

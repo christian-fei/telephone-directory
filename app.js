@@ -1,5 +1,10 @@
 /*
-	MODULES
+	      __  _______  ____  __  ____    ___________
+       /  |/  / __ \/ __ \/ / / / /   / ____/ ___/
+      / /|_/ / / / / / / / / / / /   / __/  \__ \ 
+     / /  / / /_/ / /_/ / /_/ / /___/ /___ ___/ / 
+    /_/  /_/\____/_____/\____/_____/_____//____/  
+                                                  
 */
 var express = require('express'),
   phonebook = require('./modules/phonebook'),
@@ -20,7 +25,12 @@ phonebook.connect( process.env.MONGO_URL, 'contacts', function(success){
 
 
 /*
-	SETUP
+	     _____ ______________  ______ 
+      / ___// ____/_  __/ / / / __ \
+      \__ \/ __/   / / / / / / /_/ /
+     ___/ / /___  / / / /_/ / ____/ 
+    /____/_____/ /_/  \____/_/      
+                                    
 */
 app.set('port', process.env.PORT || 3000); //PORT
 app.set('views', __dirname + '/views'); //views dir
@@ -28,7 +38,12 @@ app.set('view engine', 'jade'); //use the Jade templating engine
 
 
 /*
-	MIDDLEWARES
+	      __  ___________  ____  __    _______       _____    ____  ___________
+       /  |/  /  _/ __ \/ __ \/ /   / ____/ |     / /   |  / __ \/ ____/ ___/
+      / /|_/ // // / / / / / / /   / __/  | | /| / / /| | / /_/ / __/  \__ \ 
+     / /  / // // /_/ / /_/ / /___/ /___  | |/ |/ / ___ |/ _, _/ /___ ___/ / 
+    /_/  /_/___/_____/_____/_____/_____/  |__/|__/_/  |_/_/ |_/_____//____/  
+                                                                             
 */
 app.use(express.json()); //json middleware
 app.use(express.urlencoded()); //urlencoded middleware
@@ -38,27 +53,35 @@ app.use(express.static(__dirname + '/public')); //serve static files from the pu
 
 
 /*
-	ROUTES
+	      ____  ____  __  ___________________
+       / __ \/ __ \/ / / /_  __/ ____/ ___/
+      / /_/ / / / / / / / / / / __/  \__ \ 
+     / _, _/ /_/ / /_/ / / / / /___ ___/ / 
+    /_/ |_|\____/\____/ /_/ /_____//____/  
+                                           
+*/
+
+/*
+  render a list of entries if any
 */
 app.get('/', function(req,res){
-  /*
-    render a list of entries if any
-  */
   phonebook.getEntries(10, function(entries){
     res.render('index', {entries: entries});
   });
 });
+
+/*
+  render the add form
+*/
 app.get('/add', function(req,res){
-  /*
-    render the add form
-  */
   res.render('form',{name:'add'});
 });
+
+/*
+  insert (if not existing and valid)
+  and redirect to / with GET
+*/
 app.post('/add', function(req,res){
-  /*
-    insert (if not existing and valid)
-    and redirect to / with GET
-  */
   var entry = req.body;
   phonebook.insert(entry, function(doc){
     /* redirect the post request */
@@ -68,6 +91,41 @@ app.post('/add', function(req,res){
     res.end();
   });
 });
+
+/*
+  render the edit form
+  with the prefilled fields
+*/
+app.get('/edit/:id', function(req,res){
+  var id = req.params.id;
+  phonebook.getEntry(id, function(entry){
+    console.log( entry );
+    if(entry){
+      res.render('form',{name:'edit', entry: entry});
+    }else{
+      res.render('form',{name:'add'});
+    }
+  });
+});
+
+/*
+  update the entry with the updated information
+*/
+app.post('/edit', function(req,res){
+  var id = req.body.id,
+    doc = req.body;
+
+  console.log( doc );
+
+  phonebook.update(id, doc, function(success){
+    console.log( success );
+    res.writeHead(302, {
+      'Location': '/'
+    });
+    res.end();
+  });
+});
+
 app.get('/edit/:id', function(req,res){
   /*
     render the edit form
@@ -83,29 +141,17 @@ app.get('/edit/:id', function(req,res){
     }
   });
 });
-app.post('/edit', function(req,res){
-  /*
-    update the entry with the updated information
-  */
-  /**/
-  var id = req.body.id,
-    doc = req.body;
 
-  console.log( doc );
 
-  phonebook.update(id, doc, function(success){
-    console.log( success );
-    res.writeHead(302, {
-      'Location': '/'
-    });
-    res.end();
-  });
-  /**/
-});
 
 
 /*
-	LAUNCH THE SERVER
+	     _____ __________ _    ____________ 
+      / ___// ____/ __ \ |  / / ____/ __ \
+      \__ \/ __/ / /_/ / | / / __/ / /_/ /
+     ___/ / /___/ _, _/| |/ / /___/ _, _/ 
+    /____/_____/_/ |_| |___/_____/_/ |_|  
+                                          
 */
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on http://localhost:' + app.get('port'));
