@@ -61,6 +61,13 @@ app.use(express.static(__dirname + '/public')); //serve static files from the pu
                                            
 */
 
+function redirectTo( res, path ){
+  res.writeHead(302, {
+    'Location': path
+  });
+  res.end();
+}
+
 /*
   render a list of entries if any
 */
@@ -85,10 +92,7 @@ app.post('/add', function(req,res){
   var entry = req.body;
   phonebook.insert(entry, function(doc){
     /* redirect the post request */
-    res.writeHead(302, {
-      'Location': '/'
-    });
-    res.end();
+    redirectTo(res, '/');
   });
 });
 
@@ -111,34 +115,36 @@ app.get('/edit/:id', function(req,res){
 /*
   update the entry with the updated information
 */
-app.post('/edit', function(req,res){
-  var id = req.body.id,
-    doc = req.body;
-
-  console.log( doc );
-
-  phonebook.update(id, doc, function(success){
-    console.log( success );
-    res.writeHead(302, {
-      'Location': '/'
-    });
-    res.end();
-  });
-});
-
+/*
+  render the edit form
+  with the prefilled fields
+*/
 app.get('/edit/:id', function(req,res){
-  /*
-    render the edit form
-    with the prefilled fields
-  */
   var id = req.params.id;
   phonebook.getEntry(id, function(entry){
-    console.log( entry );
     if(entry){
       res.render('form',{name:'edit', entry: entry});
     }else{
       res.render('form',{name:'add'});
     }
+  });
+});
+/*
+  this route will be hit, when the user submits the edit form
+*/
+app.post('/edit', function(req,res){
+  var id = req.body.id,
+    doc = req.body;
+
+  phonebook.update(id, doc, function(success){
+    redirectTo(res, '/');
+  });
+});
+
+app.get('/delete/:id', function(req,res){
+  var id = req.params.id;
+  phonebook.remove(id, function(success){
+    redirectTo(res, '/');
   });
 });
 
