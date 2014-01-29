@@ -3,7 +3,7 @@ Telephone directory
 A simple exercise to learn a bit more about Heroku, Travis CI and test driven development with Jasmine.
 The online version of this application can be found [here](http://telephone-directory.herokuapp.com/)
 
-[![Build Status](https://travis-ci.org/christian-fei/telephone-directory.png?branch=master)](https://travis-ci.org/christian-fei/telephone-directory)
+[![Build Status](https://travis-ci.org/christian-fei/telephone-directory.png?branch=master)](https://travis-ci.org/christian-fei/telephone-directory) ![awesomeness](http://b.adge.me/badge/awesomeness-9000+-green.svg)
 
 
 
